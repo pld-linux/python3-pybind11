@@ -17,7 +17,7 @@
 Summary:	Seamless operability between C++11 and Python
 Name:		python-%{pypi_name}
 Version:	2.2.4
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/p/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
