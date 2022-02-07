@@ -9,13 +9,13 @@
 Summary:	Seamless operability between C++11 and Python
 Summary(pl.UTF-8):	Gładka współpraca między C++11 a Pythonem
 Name:		python-%{pypi_name}
-Version:	2.5.0
-Release:	2
+Version:	2.9.1
+Release:	1
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pybind11/
-Source0:	https://files.pythonhosted.org/packages/source/p/pybind11/%{pypi_name}-%{version}.tar.gz
-# Source0-md5:	5355e1fd05c8eedef19cc9bfd3d82a77
+Source0:	https://github.com/pybind/pybind11/archive/v%{version}/%{pypi_name}-%{version}.tar.gz
+# Source0-md5:	7609dcb4e6e18eee9dc1a5f26572ded1
 URL:		https://pypi.org/project/pybind11/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -79,6 +79,19 @@ kompilacji.
 %setup -q -n %{pypi_name}-%{version}
 
 %build
+pys=""
+%if %{with python2}
+pys="$pys python2"
+%endif
+%if %{with python3}
+pys="$pys python3"
+%endif
+for py in $pys; do
+	mkdir $py
+	%cmake -B $py -DCMAKE_BUILD_TYPE=Debug -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE -DPYBIND11_TEST=OFF
+	%{__make} -C $py
+done
+
 %if %{with python2}
 %py_build
 %endif
@@ -91,12 +104,14 @@ kompilacji.
 rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
+%{__make} install -C python2 DESTDIR=$RPM_BUILD_ROOT
 %py_install
 
 %py_postclean
 %endif
 
 %if %{with python3}
+%{__make} install -C python3 DESTDIR=$RPM_BUILD_ROOT
 %py3_install
 %endif
 
@@ -106,17 +121,18 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc LICENSE README.md
+%doc LICENSE README.rst
 %{py_sitescriptdir}/%{module}
 %{py_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
-%{py_incdir}/pybind11
 %endif
 
 %if %{with python3}
 %files -n python3-%{pypi_name}
 %defattr(644,root,root,755)
-%doc LICENSE README.md
+%doc LICENSE README.rst
+%attr(755,root,root) %{_bindir}/pybind11-config
 %{py3_sitescriptdir}/%{module}
 %{py3_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
-%{py3_incdir}/pybind11
+%{_includedir}/%{module}
+%{_datadir}/cmake/pybind11
 %endif
