@@ -10,7 +10,7 @@ Summary:	Seamless operability between C++11 and Python
 Summary(pl.UTF-8):	Gładka współpraca między C++11 a Pythonem
 Name:		python-%{pypi_name}
 Version:	2.9.1
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pybind11/
