@@ -9,13 +9,14 @@
 Summary:	Seamless operability between C++11 and Python
 Summary(pl.UTF-8):	Gładka współpraca między C++11 a Pythonem
 Name:		python-%{pypi_name}
-Version:	2.9.1
-Release:	5
+# keep 2.9.x here for python2 support
+Version:	2.9.2
+Release:	1
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pybind11/
 Source0:	https://github.com/pybind/pybind11/archive/v%{version}/%{pypi_name}-%{version}.tar.gz
-# Source0-md5:	7609dcb4e6e18eee9dc1a5f26572ded1
+# Source0-md5:	06e4b6c2d0a5d6c6025941203cfcd4b6
 URL:		https://pypi.org/project/pybind11/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
