@@ -6,7 +6,7 @@ Summary(pl.UTF-8):	Gładka współpraca między C++11 a Pythonem
 Name:		python3-%{pypi_name}
 # keep 2.9.x here for python2 support
 Version:	2.13.6
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pybind11/
