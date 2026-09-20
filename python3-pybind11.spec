@@ -2,21 +2,23 @@
 Summary:	Seamless operability between C++11 and Python
 Summary(pl.UTF-8):	Gładka współpraca między C++11 a Pythonem
 Name:		python3-%{module}
-Version:	2.13.6
-Release:	3
+Version:	3.1.0
+Release:	1
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pybind11/
 Source0:	https://github.com/pybind/pybind11/archive/v%{version}/%{module}-%{version}.tar.gz
-# Source0-md5:	a04dead9c83edae6d84e2e343da7feeb
+# Source0-md5:	235664b4673257b80a9ab79f9b208e94
 URL:		https://pypi.org/project/pybind11/
-BuildRequires:	cmake >= 3.13
-BuildRequires:	python3-modules >= 1:3.7
-BuildRequires:	python3-setuptools >= 1:42
+BuildRequires:	cmake >= 3.15
+BuildRequires:	python3-build
+BuildRequires:	python3-installer
+BuildRequires:	python3-modules >= 1:3.9
+BuildRequires:	python3-scikit-build-core >= 0.11.2
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.714
+BuildRequires:	rpmbuild(macros) >= 2.044
 Requires:	libstdc++-devel >= 6:4.7
-Requires:	python3-devel >= 1:3.7
+Requires:	python3-devel >= 1:3.9
 Conflicts:	eigen3 < 3.2.7
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -52,7 +54,7 @@ kompilacji.
 
 %{__make} -C build-py3
 
-%py3_build
+%py3_build_pyproject
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -60,7 +62,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install -C build-py3 \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%py3_install
+%py3_install_pyproject
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -70,7 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE README.rst
 %attr(755,root,root) %{_bindir}/pybind11-config
 %{py3_sitescriptdir}/pybind11
-%{py3_sitescriptdir}/pybind11-%{version}-py*.egg-info
+%{py3_sitescriptdir}/pybind11-%{version}.dist-info
 %{_includedir}/pybind11
 %{_datadir}/cmake/pybind11
 %{_npkgconfigdir}/pybind11.pc
