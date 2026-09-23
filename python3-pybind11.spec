@@ -44,7 +44,7 @@ kompilacji.
 %setup -q -n %{module}-%{version}
 
 %build
-# CMAKE_BUILD_TYPE=Debug would helps runing tests, doesn't affect binary package as we don't package any binaries
+# CMAKE_BUILD_TYPE=Debug would helps running tests, doesn't affect binary package as we don't package any binaries
 %cmake -B build-py3 \
 	-DCMAKE_BUILD_TYPE=Debug \
 	-DPYBIND11_INSTALL=TRUE \
@@ -69,7 +69,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE README.rst
+%doc LICENSE README.rst SECURITY.md
 %attr(755,root,root) %{_bindir}/pybind11-config
 %{py3_sitescriptdir}/pybind11
 %{py3_sitescriptdir}/pybind11-%{version}.dist-info
